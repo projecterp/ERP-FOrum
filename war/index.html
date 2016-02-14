@@ -1,0 +1,22 @@
+<html>
+<head>
+<title>Dynamic Form</title>
+<script language="javascript">
+function changeIt()
+{
+var i = 1;
+my_div.innerHTML = my_div.innerHTML +"<br><textarea name='kk' rows='6' cols='30'></textarea>"
+
+}
+</script>
+</head>
+<body>
+
+<form name="form" action="try_forum" method="get">
+<p><strong>FORUM:-</strong></p>
+<input type="button" value="NEW POST" onClick="changeIt()">
+<div id="my_div"></div>
+<input type="submit" value="POST">
+</form>
+</body>
+</html>
