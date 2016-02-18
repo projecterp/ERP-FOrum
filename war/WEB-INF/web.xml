@@ -4,23 +4,41 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-	<servlet>
-        <servlet-name>home-jsp</servlet-name>
-        <jsp-file>/WEB-INF/home.jsp</jsp-file>
+	
+    <servlet>
+     <servlet-name>index2-jsp</servlet-name>
+     <jsp-file>/WEB-INF/index2.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>home-jsp</servlet-name>
-        <url-pattern>/WEB-INF/home.jsp</url-pattern>
+     <servlet-name>index2-jsp</servlet-name>
+     <url-pattern>/WEB-INF/index2.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet>
+     <servlet-name>topics-jsp</servlet-name>
+     <jsp-file>/WEB-INF/topics.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+     <servlet-name>topics-jsp</servlet-name>
+     <url-pattern>/topics.jsp</url-pattern>
     </servlet-mapping>
 	<servlet>
-		<servlet-name>Try_forum</servlet-name>
-		<servlet-class>try_forum.Try_forumServlet</servlet-class>
+		<servlet-name>Forum_v1</servlet-name>
+		<servlet-class>forum_v1.Forum_v1Servlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Try_forum</servlet-name>
-		<url-pattern>/try_forum</url-pattern>
+		<servlet-name>Forum_v1</servlet-name>
+		<url-pattern>/forum_v1</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>tag</servlet-name>
+		<servlet-class>forum_v1.tagServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>tag</servlet-name>
+		<url-pattern>/tag</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>class_home.html</welcome-file>
 	</welcome-file-list>
 </web-app>
