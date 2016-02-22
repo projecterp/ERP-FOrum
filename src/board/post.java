@@ -5,13 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import com.googlecode.objectify.annotation.Id;
 @Entity
 public class Post {
 
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Id
-	String id; 
+	private String user_id; 
 	private String str;
     private String time;
     private String sem;
@@ -19,6 +16,8 @@ public class Post {
     private ArrayList<String> comment = new ArrayList();
     private int comment_count;    
     private ArrayList<String> tag=new ArrayList();
+    private float rating;
+    private int rating_count;
     void Post()
     {
     	this.comment.add("");
@@ -66,6 +65,12 @@ public class Post {
 	}
 	public void setSub(String sub) {
 		this.sub = sub;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
 }

@@ -1,6 +1,14 @@
-<!-- Indices written at Thu, 18 Feb 2016 16:27:41 IST -->
+<!-- Indices written at Mon, 22 Feb 2016 13:14:29 IST -->
 
 <datastore-indexes>
+
+    <!-- Used 121 times in query history -->
+    <datastore-index kind="Post" ancestor="false" source="auto">
+        <property name="sem" direction="asc"/>
+        <property name="sub" direction="asc"/>
+        <property name="topic" direction="asc"/>
+        <property name="time" direction="desc"/>
+    </datastore-index>
 
     <!-- Used 1 time in query history -->
     <datastore-index kind="Topics" ancestor="false" source="auto">
@@ -9,11 +17,9 @@
         <property name="time" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="Post" ancestor="false" source="auto">
-        <property name="sem" direction="asc"/>
-        <property name="sub" direction="asc"/>
-        <property name="topic" direction="asc"/>
+        <property name="tag" direction="asc"/>
         <property name="time" direction="desc"/>
     </datastore-index>
 

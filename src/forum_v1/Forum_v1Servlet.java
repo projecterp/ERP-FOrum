@@ -1,5 +1,8 @@
 package forum_v1;
 
+import querymanager.QueryManager;
+import querymanager.Query_All;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -20,22 +23,37 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.CompositeFilter;
 import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import board.Post;
 @SuppressWarnings("serial")
 public class Forum_v1Servlet extends HttpServlet {
-	private String text;
+	public String text;
 	public static String prev_topic;
 	public int a=0;
+	Query_All query=new Query_All();
+	String user_id;
+	String sub;
+	String sem;
+	String topic;
+	String post_str;
+	String tag;
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		resp.setContentType("text/html");
-		com.google.appengine.api.datastore.DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+	    user_id=user.getNickname();
+	    sub=req.getParameter("sub");
+	    sem=req.getParameter("sem");
+	    topic=req.getParameter("topic");
+	    post_str=req.getParameter("post");
+	    tag=req.getParameter("tag");
     if((req.getParameter("btn").equals("ADD POST")))	
     {	
-    	
-    	Query q = new Query("Post").addSort("time", SortDirection.DESCENDING);
+    	query.addPost(user_id, sub, sem, topic, post_str,tag);
+ /*   	Query q = new Query("Post").addSort("time", SortDirection.DESCENDING);
 		q.setFilter(
 				new Query.FilterPredicate(
 				"str",
@@ -67,13 +85,15 @@ public class Forum_v1Servlet extends HttpServlet {
 	    post.setProperty("tag",tag);		
 	    ds.put(post);
 	  }
-	  RequestDispatcher jsp = req.getRequestDispatcher("/WEB-INF/index2.jsp");
+*/
+	  RequestDispatcher jsp = req.getRequestDispatcher("/index2.jsp");
 	  jsp.forward(req,resp);
 	  
     }
     else if((req.getParameter("btn").equals("ADD NEW TOPIC")))
     {
-    	 String temp;
+    	 query.addTopic(topic, sem, sub);
+/*    	 String temp;
 		 temp=req.getParameter("topic");
     	 if(!(temp.equals("")) && !(temp.equals(prev_topic)))
     	 {
@@ -112,13 +132,14 @@ public class Forum_v1Servlet extends HttpServlet {
     			  ds.put(xyz);
     		  }
     	 }		  
-        	  RequestDispatcher jsp = req.getRequestDispatcher("/topics.jsp");
+*/        	 
+    	      RequestDispatcher jsp = req.getRequestDispatcher("/topics.jsp");
         	  jsp.forward(req,resp);
         	  
     }
     else
     {
-  	  RequestDispatcher jsp = req.getRequestDispatcher("/WEB-INF/index2.jsp");
+  	  RequestDispatcher jsp = req.getRequestDispatcher("/index2.jsp");
 	  jsp.forward(req,resp);
 
     }

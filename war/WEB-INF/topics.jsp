@@ -1,82 +1,64 @@
 <%@ page import="java.io.IOException"
-import ="java.io.PrintWriter"
 import ="java.util.ArrayList"
 import ="java.util.Iterator"
 import ="com.google.appengine.api.datastore.Entity"
-import ="java.util.Calendar"
-import ="javax.servlet.RequestDispatcher"
-import ="javax.servlet.ServletException"
-import ="javax.servlet.http.*"
-import ="com.google.appengine.api.datastore.DatastoreServiceFactory"
-import ="java.text.SimpleDateFormat"
-import ="com.google.appengine.api.datastore.PreparedQuery"
-import ="com.google.appengine.api.datastore.Query"
-import ="com.google.apphosting.api.DatastorePb.DatastoreService"
 import ="com.sun.xml.internal.bind.v2.schemagen.xmlschema.List"
-import ="com.google.appengine.api.datastore.Query.SortDirection"
-import ="com.google.appengine.api.datastore.Query.Filter"
-import ="com.google.appengine.api.datastore.Query.FilterPredicate"
-import ="com.google.appengine.api.datastore.Query.FilterOperator"
-import ="com.google.appengine.api.datastore.Query.CompositeFilter"
-import ="com.google.appengine.api.datastore.Query.CompositeFilterOperator"
+import ="querymanager.Query_All"
 %>
+
+<script type="text/javascript">
+function activate_new_topic()
+{
+   document.getElementById("new_topic").style.display="block";
+}
+</script>
 <html>
 <head>
-<title>The Posts are...</title>
+<title>The Topics are...</title>
 <style>
 body { 
     background:  url("6918865-black-background-wood.jpg") no-repeat fixed center; 
 }
-div {
-    background-color: lightgrey;
-    width: 300px;
-    padding: 15px;
-    border: 5px solid navy;
-    margin: 15px;
+input[type=submit].view {
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    overflow: visible;
 }
 </style>
 </head>
 <body>
 <strong>
-<font color="red" size="20">
+<font color="red" size="15">
 <p>TOPICS</p>
-<p>Your posts are:-</p>
+<p>Your Topics are:-</p>
 </font>
-<font color="blue" size="10">
+<font color="white" size="5">
 <form action="forum_v1" method="get">
+<input type="hidden" name="flag" value="false">
+<input type="hidden" name="rating" value="0">
 <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
 <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
 <%
-    Calendar cal = Calendar.getInstance();
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-    
-    Filter semFilter =
-      new FilterPredicate("sem",
-                      FilterOperator.EQUAL,
-                      request.getParameter("sem"));
-    Filter subFilter =
-      new FilterPredicate("sub",
-                      FilterOperator.EQUAL,
-                      request.getParameter("sub"));
-
-    Filter validFilter = CompositeFilterOperator.and(semFilter,subFilter);
-    com.google.appengine.api.datastore.DatastoreService ds = DatastoreServiceFactory.getDatastoreService();  
-    Query q = new Query("Topics").setFilter(validFilter).addSort("time", SortDirection.DESCENDING);
-		PreparedQuery pq = ds.prepare(q);
-
-		for (Entity result : pq.asIterable()) {
+          Query_All query=new Query_All();
 		  ArrayList<String> temp=new ArrayList();
-		  temp=(ArrayList<String>)result.getProperty("topics");
+		  temp=query.getTopics(request.getParameter("sem"),request.getParameter("sub"));		   
 		  for(String str:temp)
 		  {
 %>
-<p><input type="Submit" name="btn" height="10" value="<%=str%>"></p>
+<p><input type="Submit" name="btn" height="10" class="view" value="<%=str%>"></p>
 <%
-}
 } 
 %>
-<p>NEW TOPIC:<input type="text" name="topic"><p>
+
+<p>For adding new topic:<input type="button" value="NEW TOPIC" onClick="activate_new_topic()"></p>
+<div id="new_topic" style="display:none">
+<br><input type="text" name="topic" >
 <input type="Submit" name="btn" value="ADD NEW TOPIC">
+</div>
 </font>
 </form>
 </body>
